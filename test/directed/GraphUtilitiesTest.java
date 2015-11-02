@@ -72,23 +72,30 @@ public class GraphUtilitiesTest {
     GraphNode nullGraphNode = null;
     GraphUtilities.maximumPathLength(nullGraphNode);
   }
+  
+  private void checkPathLength(Map<Integer, List<GraphNode>> longestPath, int expectedPathLength, int expectedNumNodes) {
+    assertEquals(longestPath.size(), 1);
+    List<GraphNode> path = null;
+    for (Integer maxPathLength: longestPath.keySet()) {
+      assertEquals(maxPathLength.intValue(), expectedPathLength);
+      path = longestPath.get(maxPathLength);
+    }
+    assertEquals(path.size(), expectedNumNodes);
+    int nodeLabel = expectedPathLength;
+    for (GraphNode n:path) {
+      assertEquals(n.label, nodeLabel);
+      nodeLabel--;
+    }
+  }
 
   @Test
   public void testMaximumPathLength() {
     Map<Integer, List<GraphNode>> longestPath;
     longestPath = GraphUtilities.maximumPathLength(nodes[0]);
-
-    assertEquals(longestPath.size(), 1);
-    List<GraphNode> path = null;
-    for (Integer maxPathLength : longestPath.keySet()) {
-      assertEquals(maxPathLength.intValue(), 5);
-      path = longestPath.get(maxPathLength);
-    }
-    assertEquals(path.size(), 6);
-    int nodeLabel = 5;
-    for (GraphNode n : path) {
-      assertEquals(n.label, nodeLabel);
-      nodeLabel--;
-    }
+    checkPathLength(longestPath, 5, 6);
+    
+    longestPath = GraphUtilities.maximumPathLength(new GraphNode(0));
+    checkPathLength(longestPath, 0, 1);
+    
   }
 }

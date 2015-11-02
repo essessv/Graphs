@@ -25,15 +25,17 @@ public class Main {
     nodes[4].addEdge(nodes[5]);
 
     Map<Integer, List<GraphNode>> longestPath;
-    longestPath = GraphUtilities.maximumPathLength(nodes[0]);
+    int sourceNode = 0;
+    longestPath = GraphUtilities.maximumPathLength(nodes[sourceNode]);
 
     for (Integer maxDistance : longestPath.keySet()) {
       System.out.format("%d: [", maxDistance);
 
       List<GraphNode> path = longestPath.get(maxDistance);
-      for (int i = 5; i > 0; i--) {
-        System.out.format("(%d,%d)", path.get(i).label, path.get(i - 1).label);
+      for (int i=path.size()-1; i > 0; i--) {
+        System.out.format("(%d,%d)", path.get(i).label, path.get(i-1).label);
       }
+
       System.out.println("]");
     }
   }
